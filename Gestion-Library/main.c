@@ -71,6 +71,7 @@ void db_saveLives(Livres livres) {
     
     if (livres_db == NULL) {
         perror("Critical error, your data was not saved");
+        fclose(livres_db);
         exit(EXIT_FAILURE);
     }
     
@@ -93,21 +94,29 @@ void db_saveMembres(Membres membres) {
     
     if (membres_db == NULL) {
         perror("Critical error, your data was not saved!");
+        fclose(membres_db);
         exit(EXIT_FAILURE);
     }
     
     fprintf(membres_db, "DATA_INTEGRITY_CHECK:%s\n", location);
     fprintf(membres_db, "DATA_SIZE:%d\n", membres.taille);
-    Membre membre;
+    
+    int totalsize = membres.taille;
     int i;
     int r;
     for (i = 0; i < membres.taille; i++) {
+        totalsize = totalsize + membres.membres[i].emprunts.taille;
+    }
+    fprintf(membres_db, "TOTAL_DATA_SIZE:%d\n", totalsize);
+    
+    Membre membre;
+    
+    for (i = 0; i < membres.taille; i++) {
         membre = membres.membres[i];
-        fprintf(membres_db, "%s:%s:%s:%s:%s:%d/", membre.nom, membre.prenom, membre.adresse, membre.mail, membre.metier, membres.membres[i].emprunts.taille);
+        fprintf(membres_db, "%s:%s:%s:%s:%s:%d/\n", membre.nom, membre.prenom, membre.adresse, membre.mail, membre.metier, membres.membres[i].emprunts.taille);
         for (r = 0; r < membres.membres[i].emprunts.taille; r++) {
-            fprintf(membres_db, "%s:%d:%d:%d/", membre.emprunts.emprunt[r].code, membre.emprunts.emprunt[r].dateRetour.jour, membre.emprunts.emprunt[r].dateRetour.mois, membre.emprunts.emprunt[r].dateRetour.annee);
+            fprintf(membres_db, "%s:%d:%d:%d/\n", membre.emprunts.emprunt[r].code, membre.emprunts.emprunt[r].dateRetour.jour, membre.emprunts.emprunt[r].dateRetour.mois, membre.emprunts.emprunt[r].dateRetour.annee);
         }
-        fprintf(membres_db, ";\n");
     }
     fclose(membres_db);
 }
@@ -119,6 +128,7 @@ void db_loadLivres(Livres* livres) {
     
     if (livres_db == NULL) {
         perror("Unable to load the database!\n");
+        fclose(livres_db);
         return;
     }
     
@@ -129,6 +139,7 @@ void db_loadLivres(Livres* livres) {
     
     if (strcmp(integrityCheck, location) != 0) {
         printf("Integrity check failed, not loading data!\n");
+        fclose(livres_db);
         return;
     }
     
@@ -149,6 +160,7 @@ void db_loadLivres(Livres* livres) {
     
     if (integrity_module == NULL) {
         perror("Unable to load the database!\n");
+        fclose(livres_db);
         return;
     }
     
@@ -165,6 +177,7 @@ void db_loadLivres(Livres* livres) {
     if (integrity != size) {
         printf("\nIntegrity Module calculated %d, but %d was exptected.\n", integrity, size);
         printf("Integrity test failed: the file was illegally modified! Not loading data.\n\n");
+        fclose(livres_db);
         return;
     }
     
@@ -181,13 +194,13 @@ void db_loadLivres(Livres* livres) {
 }
 
 void db_loadMembres(Membres* membres) {
-    //TODO: Charger les membres depuis la base de données.
     char* location = "db-membres.data";
     printf("Now reading for location: %s\n", location);
     FILE *membres_db = fopen(location, "r");
     
     if (membres_db == NULL) {
         perror("Unable to load the database!\n");
+        fclose(membres_db);
         return;
     }
     
@@ -198,26 +211,35 @@ void db_loadMembres(Membres* membres) {
     
     if (strcmp(integrityCheck, location) != 0) {
         printf("Integrity check failed, not loading data!\n");
+        fclose(membres_db);
         return;
     }
     
     int i = 0;
+    int r = 0;
     int size = 0;
+    int totalsize = 0;
     
     char verification[150];
+    char verificationtotal[150];
     
     //fscanf(livres_db, "DATA_SIZE: %d", &size);
     fscanf(membres_db, " %19[^:]:%d\n", verification, &size);
+    fscanf(membres_db, " %19[^:]:%d\n", verificationtotal, &totalsize);
     
     
     printf("Verification : %s\n", verification);
+    printf("Verificationtotal : %s\n", verificationtotal);
     
     printf("READ DATA_SIZE: %d\n", size);
+    printf("READ TOTAL_DATA_SIZE: %d\n", totalsize);
+
     
     FILE *integrity_module = fopen(location, "r");
     
     if (integrity_module == NULL) {
         perror("Unable to load the database!\n");
+        fclose(membres_db);
         return;
     }
     
@@ -228,12 +250,13 @@ void db_loadMembres(Membres* membres) {
             integrity = integrity + 1;
         }
     }
-    integrity = integrity - 2;
+    integrity = integrity - 3;
     fclose(integrity_module);
     
-    if (integrity != size) {
+    if (integrity != totalsize) {
         printf("\nIntegrity Module calculated %d, but %d was exptected.\n", integrity, size);
         printf("Integrity test failed: the file was illegally modified! Not loading data.\n\n");
+        fclose(membres_db);
         return;
     }
     
@@ -243,13 +266,11 @@ void db_loadMembres(Membres* membres) {
     membres->membres = (Membre*) malloc(size * sizeof(Membre));
     
     for (i = 0; i < size; i++) {
-        fscanf(membres_db, " %100[^:]:%100[^:]:%100[^:]:%100[^:]:%100[^/]/", membres->membres[i].nom, membres->membres[i].prenom, membres->membres[i].adresse, membres->membres[i].mail, membres->membres[i].metier);
+        fscanf(membres_db, " %100[^:]:%100[^:]:%100[^:]:%100[^:]:%100[^:]:%d/", membres->membres[i].nom, membres->membres[i].prenom, membres->membres[i].adresse, membres->membres[i].mail, membres->membres[i].metier, &membres->membres[i].emprunts.taille);
         
-        // TODO: INSCRIRE LES LIVRES EMPRUNTÉS SUR UNE NOUVELLE LIGNE.
-        
-        //fprintf(membres_db, "%s:%s:%s:%s:%s:%s:%d:%d:%d;\n", membre.nom, membre.prenom, membre.adresse, membre.mail, membre.metier, membre.emprunts->code, membre.emprunts->dateRetour.jour, membre.emprunts->dateRetour.mois, membre.emprunts->dateRetour.annee);
-        
-        
+        for (r = 0; r < membres->membres[i].emprunts.taille; r++) {
+            fscanf(membres_db, " %100[^:]:%d:%d:%d/", membres->membres[i].emprunts.emprunt[r].code, &membres->membres[i].emprunts.emprunt[r].dateRetour.jour, &membres->membres[i].emprunts.emprunt[r].dateRetour.mois, &membres->membres[i].emprunts.emprunt[r].dateRetour.annee);
+        }
     }
     
     fclose(membres_db);
