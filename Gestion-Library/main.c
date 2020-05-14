@@ -11,14 +11,270 @@
 #include <math.h>
 #include <stdlib.h>
 
-
 typedef struct Livre {
-    char* nom;
-    char* auteur;
+    char nom[50];
+    char auteur[50];
+    char code[8];
+    int exemplaires;
+    int disponibles;
 } Livre;
 
-int main()
+typedef struct Livres {
+    Livre* livres;
+    int taille;
+} Livres;
+
+typedef struct Date {
+    int jour;
+    int mois;
+    int annee;
+} Date;
+
+typedef struct Emprunt {
+    char code[8];
+    Date dateRetour;
+} Emprunt;
+
+typedef struct Emprunts {
+    Emprunt* emprunt;
+    int taille;
+} Emprunts;
+
+typedef struct Membre {
+    char nom[50];
+    char prenom[50];
+    char mail[50];
+    char adresse[50];
+    char metier[50];
+    Emprunts emprunts;
+} Membre;
+
+typedef struct Membres {
+    Membre* membres;
+    int taille;
+} Membres;
+
+char* concat(const char *s1, const char *s2)
 {
+    char *result = malloc(strlen(s1) + strlen(s2) + 1); // +1 for the null-terminator
+    // in real code you would check for errors in malloc here
+    strcpy(result, s1);
+    strcat(result, s2);
+    return result;
+}
+
+void db_saveLives(Livres livres) {
+    //char* location = concat("/Gestion-Library/databases", "/db-livres.data");
+    char* location = "db-livres.data";
+    printf("Now saving to location: %s\n", location);
+    FILE *livres_db = fopen(location, "w");
+    
+    if (livres_db == NULL) {
+        perror("Critical error, your data was not saved");
+        exit(EXIT_FAILURE);
+    }
+    
+    fprintf(livres_db, "DATA_INTEGRITY_CHECK:%s\n", location);
+    fprintf(livres_db, "DATA_SIZE:%d\n", livres.taille);
+    Livre livre;
+    int i;
+    for (i = 0; i < livres.taille; i++) {
+        livre = livres.livres[i];
+        fprintf(livres_db, "%s:%s:%d:%d:%s;\n", livre.auteur, livre.code, livre.disponibles, livre.exemplaires, livre.nom);
+    }
+    fclose(livres_db);
+}
+
+void db_saveMembres(Membres membres) {
+    //char* location = concat("/Gestion-Library/databases", "/db-membres.data");
+    char* location = "db-membres.data";
+    printf("Now saving to location: %s", location);
+    FILE *membres_db = fopen(location, "w");
+    
+    if (membres_db == NULL) {
+        perror("Critical error, your data was not saved!");
+        exit(EXIT_FAILURE);
+    }
+    
+    fprintf(membres_db, "DATA_INTEGRITY_CHECK:%s\n", location);
+    fprintf(membres_db, "DATA_SIZE:%d\n", membres.taille);
+    Membre membre;
+    int i;
+    int r;
+    for (i = 0; i < membres.taille; i++) {
+        membre = membres.membres[i];
+        fprintf(membres_db, "%s:%s:%s:%s:%s:%d/", membre.nom, membre.prenom, membre.adresse, membre.mail, membre.metier, membres.membres[i].emprunts.taille);
+        for (r = 0; r < membres.membres[i].emprunts.taille; r++) {
+            fprintf(membres_db, "%s:%d:%d:%d/", membre.emprunts.emprunt[r].code, membre.emprunts.emprunt[r].dateRetour.jour, membre.emprunts.emprunt[r].dateRetour.mois, membre.emprunts.emprunt[r].dateRetour.annee);
+        }
+        fprintf(membres_db, ";\n");
+    }
+    fclose(membres_db);
+}
+
+void db_loadLivres(Livres* livres) {
+    char* location = "db-livres.data";
+    printf("Now reading for location: %s\n", location);
+    FILE *livres_db = fopen(location, "r");
+    
+    if (livres_db == NULL) {
+        perror("Unable to load the database!\n");
+        return;
+    }
+    
+    char integrityCheck[150];
+    fscanf(livres_db, "DATA_INTEGRITY_CHECK:%s", integrityCheck);
+    
+    printf("Integrity check: %s\n", integrityCheck);
+    
+    if (strcmp(integrityCheck, location) != 0) {
+        printf("Integrity check failed, not loading data!\n");
+        return;
+    }
+    
+    int i = 0;
+    int size = 0;
+    
+    char verification[150];
+    
+    //fscanf(livres_db, "DATA_SIZE: %d", &size);
+    fscanf(livres_db, " %19[^:]:%d\n", verification, &size);
+    
+    
+    printf("Verification : %s\n", verification);
+    
+    printf("READ DATA_SIZE: %d\n", size);
+    
+    FILE *integrity_module = fopen(location, "r");
+    
+    if (integrity_module == NULL) {
+        perror("Unable to load the database!\n");
+        return;
+    }
+    
+    char c;
+    int integrity = 0;
+    for (c = getc(integrity_module); c != EOF; c = getc(integrity_module)) {
+        if (c == '\n') { // Increment count if this character is newline
+            integrity = integrity + 1;
+        }
+    }
+    integrity = integrity - 2;
+    fclose(integrity_module);
+    
+    if (integrity != size) {
+        printf("\nIntegrity Module calculated %d, but %d was exptected.\n", integrity, size);
+        printf("Integrity test failed: the file was illegally modified! Not loading data.\n\n");
+        return;
+    }
+    
+    
+    livres->taille = size;
+    
+    livres->livres = (Livre*) malloc(size * sizeof(Livre));
+    
+    for (i = 0; i < size; i++) {
+        fscanf(livres_db, " %100[^:]:%100[^:]:%d:%d:%100[^;];", livres->livres[i].auteur, livres->livres[i].code, &livres->livres[i].disponibles, &livres->livres[i].exemplaires, livres->livres[i].nom);
+    }
+    
+    fclose(livres_db);
+}
+
+void db_loadMembres(Membres* membres) {
+    //TODO: Charger les membres depuis la base de données.
+    char* location = "db-membres.data";
+    printf("Now reading for location: %s\n", location);
+    FILE *membres_db = fopen(location, "r");
+    
+    if (membres_db == NULL) {
+        perror("Unable to load the database!\n");
+        return;
+    }
+    
+    char integrityCheck[150];
+    fscanf(membres_db, "DATA_INTEGRITY_CHECK:%s", integrityCheck);
+    
+    printf("Integrity check: %s\n", integrityCheck);
+    
+    if (strcmp(integrityCheck, location) != 0) {
+        printf("Integrity check failed, not loading data!\n");
+        return;
+    }
+    
+    int i = 0;
+    int size = 0;
+    
+    char verification[150];
+    
+    //fscanf(livres_db, "DATA_SIZE: %d", &size);
+    fscanf(membres_db, " %19[^:]:%d\n", verification, &size);
+    
+    
+    printf("Verification : %s\n", verification);
+    
+    printf("READ DATA_SIZE: %d\n", size);
+    
+    FILE *integrity_module = fopen(location, "r");
+    
+    if (integrity_module == NULL) {
+        perror("Unable to load the database!\n");
+        return;
+    }
+    
+    char c;
+    int integrity = 0;
+    for (c = getc(integrity_module); c != EOF; c = getc(integrity_module)) {
+        if (c == '\n') { // Increment count if this character is newline
+            integrity = integrity + 1;
+        }
+    }
+    integrity = integrity - 2;
+    fclose(integrity_module);
+    
+    if (integrity != size) {
+        printf("\nIntegrity Module calculated %d, but %d was exptected.\n", integrity, size);
+        printf("Integrity test failed: the file was illegally modified! Not loading data.\n\n");
+        return;
+    }
+    
+    
+    membres->taille = size;
+    
+    membres->membres = (Membre*) malloc(size * sizeof(Membre));
+    
+    for (i = 0; i < size; i++) {
+        fscanf(membres_db, " %100[^:]:%100[^:]:%100[^:]:%100[^:]:%100[^/]/", membres->membres[i].nom, membres->membres[i].prenom, membres->membres[i].adresse, membres->membres[i].mail, membres->membres[i].metier);
+        
+        // TODO: INSCRIRE LES LIVRES EMPRUNTÉS SUR UNE NOUVELLE LIGNE.
+        
+        //fprintf(membres_db, "%s:%s:%s:%s:%s:%s:%d:%d:%d;\n", membre.nom, membre.prenom, membre.adresse, membre.mail, membre.metier, membre.emprunts->code, membre.emprunts->dateRetour.jour, membre.emprunts->dateRetour.mois, membre.emprunts->dateRetour.annee);
+        
+        
+    }
+    
+    fclose(membres_db);
+}
+
+
+int main(int argc, const char * argv[])
+{
+    
+    Livres livresimport;
+    db_loadLivres(&livresimport);
+    
+    int r;
+    for(r = 0; r < livresimport.taille; r++) {
+        printf("Livre %d\n", r+1);
+        printf("\tNom   : ");
+        printf("%s", livresimport.livres[r].nom);
+        printf("\tAuteur: ");
+        printf("%s", livresimport.livres[r].auteur);
+
+        printf("\n---------------\n");
+    }
+    
+    exit(EXIT_SUCCESS);
+    
     int nb_livre;
     Livre* tab_livre;
 
@@ -37,8 +293,14 @@ int main()
         printf("\tNom   ?: ");
 
         scanf("%49s", tab_livre[i].nom);
+        fflush(stdin);
         printf("\tAuteur?: ");
         scanf("%49s", tab_livre[i].auteur);
+        fflush(stdin);
+        
+        strcpy(tab_livre[i].code, "XXX-YYY");
+        tab_livre[i].disponibles = 5;
+        tab_livre[i].exemplaires = 31;
 
         printf("\n---------------\n");
     }
@@ -55,6 +317,12 @@ int main()
 
         printf("\n---------------\n");
     }
+    
+    Livres livres;
+    livres.livres = tab_livre;
+    livres.taille = nb_livre;
+    
+    db_saveLives(livres);
 
     // liberation tab
     free(tab_livre);
