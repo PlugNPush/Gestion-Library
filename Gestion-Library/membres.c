@@ -54,7 +54,7 @@ void db_loadMembres(Membres* membres) {
     membres->membres = (Membre*) malloc(sizeof(Membre));
     
     if (membres_db == NULL) {
-        perror("Unable to load the database!\n");
+        perror("Impossible de charger la base de donnees!\n");
         fclose(membres_db);
         return;
     }
@@ -93,7 +93,7 @@ void db_loadMembres(Membres* membres) {
     FILE *integrity_module = fopen(location, "r");
     
     if (integrity_module == NULL) {
-        perror("Unable to load the database!\n");
+        perror("Impossible de charger la base de donnees!\n");
         fclose(membres_db);
         return;
     }
@@ -101,7 +101,7 @@ void db_loadMembres(Membres* membres) {
     char c;
     int integrity = 0;
     for (c = getc(integrity_module); c != EOF; c = getc(integrity_module)) {
-        if (c == '\n') { // Increment count if this character is newline
+        if (c == '\n') { 
             integrity = integrity + 1;
         }
     }
@@ -109,8 +109,8 @@ void db_loadMembres(Membres* membres) {
     fclose(integrity_module);
     
     if (integrity != totalsize) {
-        printf("\nIntegrity Module calculated %d, but %d was exptected.\n", integrity, totalsize);
-        printf("Integrity test failed: the file was illegally modified! Not loading data.\n\n");
+        printf("\nModule d’integrite calcule %d, mais %d a ete elimine.\n", integrity, totalsize);
+        printf("Echec du test d’integrite : le fichier a ete modifie illegalement ! Ne pas charger les donnees.\n\n");
         fclose(membres_db);
         return;
     }
@@ -167,7 +167,7 @@ void afficherMembres(Membres membres)
         printf("Membre %d\n", r+1);
         printf("\tNom   : ");
         printf("%s", membres.membres[r].nom);
-        printf("\tPrénom: ");
+        printf("\tPrenom: ");
         printf("%s", membres.membres[r].prenom);
         printf("\tAdresse: ");
         printf("%s", membres.membres[r].adresse);
@@ -199,6 +199,7 @@ void ajouterEmprunts(Emprunts* emprunts, Livres* livres)
         char code[8];
         printf("\tCode   ?: ");
         scanf("%8[^\n]", code);
+        fflush(stdin);
         
         int index = localiserCodeAutomatique(*livres, code);
         

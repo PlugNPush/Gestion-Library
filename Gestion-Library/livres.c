@@ -15,7 +15,7 @@ void db_saveLives(Livres livres) {
     FILE *livres_db = fopen(location, "w");
     
     if (livres_db == NULL) {
-        perror("Critical error, your data was not saved");
+        perror("Erreur critique, vos données n’ont pas ete enregistrees");
         fclose(livres_db);
         exit(EXIT_FAILURE);
     }
@@ -40,7 +40,7 @@ void db_loadLivres(Livres* livres) {
     livres->livres = (Livre*) malloc(sizeof(Livre));
     
     if (livres_db == NULL) {
-        perror("Unable to load the database!\n");
+        perror("Impossible de charger la base de donnees!\n");
         fclose(livres_db);
         return;
     }
@@ -48,7 +48,7 @@ void db_loadLivres(Livres* livres) {
     char integrityCheck[150];
     fscanf(livres_db, "DATA_INTEGRITY_CHECK:%s", integrityCheck);
     
-    printf("Integrity check: %s\n", integrityCheck);
+    printf("controle d'integrite: %s\n", integrityCheck);
     
     if (strcmp(integrityCheck, location) != 0) {
         printf("Integrity check failed, not loading data!\n");
@@ -72,7 +72,7 @@ void db_loadLivres(Livres* livres) {
     FILE *integrity_module = fopen(location, "r");
     
     if (integrity_module == NULL) {
-        perror("Unable to load the database!\n");
+        perror("Impossible de charger la base de donnees!\n");
         fclose(livres_db);
         return;
     }
@@ -80,7 +80,7 @@ void db_loadLivres(Livres* livres) {
     char c;
     int integrity = 0;
     for (c = getc(integrity_module); c != EOF; c = getc(integrity_module)) {
-        if (c == '\n') { // Increment count if this character is newline
+        if (c == '\n') { 
             integrity = integrity + 1;
         }
     }
@@ -88,8 +88,8 @@ void db_loadLivres(Livres* livres) {
     fclose(integrity_module);
     
     if (integrity != size) {
-        printf("\nIntegrity Module calculated %d, but %d was exptected.\n", integrity, size);
-        printf("Integrity test failed: the file was illegally modified! Not loading data.\n\n");
+        printf("\nModule d’integrite calcule %d, mais %d a ete elimine.\n", integrity, size);
+        printf("Echec du test d’integrite : le fichier a ete modifie illegalement ! Ne pas charger les donnees.\n\n");
         fclose(livres_db);
         return;
     }
