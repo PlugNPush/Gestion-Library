@@ -260,3 +260,17 @@ void ajouterMembres(Membres* membres)
     membres->taille = membres->taille + nb_membres;
     
 }
+
+int compareDates(Date d1, Date d2){
+    if((d1.annee == d2.annee) && (d1.mois == d2.mois) && (d1.jour == d2.jour)){
+        return 0;
+    }
+    else if ((d1.annee > d2.annee) || ((d1.mois  > d2.mois ) && (d1.annee == d2.annee)) || ((d1.jour  > d2.jour ) && (d1.mois  == d2.mois ) && (d1.annee == d2.annee))){
+        return 1;
+    }
+    else{
+    return -1;
+    }
+
+    return 0;
+}
