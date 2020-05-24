@@ -1,5 +1,5 @@
 DATA_INTEGRITY_CHECK:db-livres.data
-DATA_SIZE:21
+DATA_SIZE:22
 Nassim Bellik:POE-001:1:1:Kan et la sirene noir;
 Akira Toriyama:MAN-007:2:42:Dragon Ball;
 Ray Bradbury:ROM-451:4:10:Fareinheit 451;
@@ -21,3 +21,4 @@ Rutile-Zimra:BAD-777:8:8:Mytho;
 Papacito:ROM-069:1:2:Crepuscule des titans;
 Millar-Johnson-Plunkett:BAD-176:1:2:Superman Red son;
 Sun Tzu:ROM-419:1:2:L'art de la guerre;
+Zep:BAD-013:6:68:Captain Biceps;
