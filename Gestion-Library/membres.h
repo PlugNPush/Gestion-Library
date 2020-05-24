@@ -56,5 +56,6 @@ int localiserCodeAutomatique(Livres livres, char* code);
 void supprimerEmpunt(int ligne, Emprunts* emprunts);
 int localiserEmprunt(Emprunts emprunts, char* code);
 void supprimerEmpruntA(Membres* membres, Livres* livres, int index);
+void listerRetards(Membres* membres, Livres* livres);
 
 #endif /* membres_h */

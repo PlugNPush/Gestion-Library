@@ -18,7 +18,7 @@ void save(Livres* livres, Membres* membres)
 void start(Livres* livres, Membres* membres)
 {
     char choix[50];
-    printf("\n\n\nQue souhaitez-vous faire?\nafficher membres - afficher livres - ajouter membres - ajouter livres - rechercher un livre - demander un emprunt - rendre un emprunt - trier membres - trier livres - supprimer membre - supprimer livre - sauvegarder - sortir - sortir sans sauvegarder\n> ");
+    printf("\n\n\nQue souhaitez-vous faire?\nafficher membres - afficher livres - ajouter membres - ajouter livres - rechercher un livre - lister les retards - demander un emprunt - rendre un emprunt - trier membres - trier livres - supprimer membre - supprimer livre - sauvegarder - sortir - sortir sans sauvegarder\n> ");
     scanf("%50[^\n]", choix);
     fflush(stdin);
     printf("Commande: %s\n", choix);
@@ -32,6 +32,8 @@ void start(Livres* livres, Membres* membres)
         ajouterLivres(livres);
     } else if (strcmp(choix, "rechercher un livre") == 0) {
         rechercherLivre(*livres);
+    } else if (strcmp(choix, "lister les retards") == 0){
+        listerRetards(membres, livres);
     } else if (strcmp(choix, "demander un emprunt") == 0){
         int index = localiserMembre(*membres);
         if (index >= 0) {

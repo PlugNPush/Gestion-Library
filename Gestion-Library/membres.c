@@ -180,6 +180,23 @@ void afficherMembres(Membres membres)
     }
 }
 
+void afficherMembre(Membre membre)
+{
+    printf("\tNom   : ");
+    printf("%s", membre.nom);
+    printf("\tPrenom: ");
+    printf("%s", membre.prenom);
+    printf("\tAdresse: ");
+    printf("%s", membre.adresse);
+    printf("\tMail: ");
+    printf("%s", membre.mail);
+    printf("\tMetier: ");
+    printf("%s\n", membre.metier);
+    afficherEmprunts(membre.emprunts);
+    printf("\n---------------\n");
+
+}
+
 void ajouterEmprunts(Emprunts* emprunts, Livres* livres)
 {
     int nb_emprunts;
@@ -390,5 +407,31 @@ void supprimerEmpruntA(Membres* membres, Livres* livres, int index)
         }
         supprimerEmpunt(index2, &membres->membres[index].emprunts);
         transactionLivre(livres, index3, -1);
+    }
+}
+
+void listerRetards(Membres* membres, Livres* livres)
+{
+    time_t my_time;
+    struct tm * timeinfo;
+    time (&my_time);
+    timeinfo = localtime (&my_time);
+    Date d2;
+    d2.jour = timeinfo->tm_mday;
+    d2.mois = timeinfo->tm_mon+1;
+    d2.annee = timeinfo->tm_year+1900;
+    
+    int i, j;
+    for (i=0; i < membres->taille; i++) {
+        for (j=0; j < membres->membres[i].emprunts.taille; j++) {
+            if (compareDates(membres->membres[i].emprunts.emprunts[j].dateRetour, d2) == -1) {
+                printf("---------------\nLe membre :\n---------------\n");
+                afficherMembre(membres->membres[i]);
+                printf("n'a pas rendu dans les temps le livre : \n");
+                int index = localiserCodeAutomatique(*livres, membres->membres[i].emprunts.emprunts[j].code);
+                afficherLivre(livres->livres[index]);
+                printf("\n\n");
+            }
+        }
     }
 }
