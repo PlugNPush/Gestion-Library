@@ -1,5 +1,23 @@
 DATA_INTEGRITY_CHECK:db-livres.data
-DATA_SIZE:1
-tion: db-livres.data
-a
-:ROM-451:4:10:Fareinheit 451;
+DATA_SIZE:21
+Nassim Bellik:POE-001:1:1:Kan et la sirene noir;
+Akira Toriyama:MAN-007:2:42:Dragon Ball;
+Ray Bradbury:ROM-451:4:10:Fareinheit 451;
+Eiichiro Oda:MAN-100:1:99:One Piece;
+Laurent Obertone:ROM-666:7:32:Guerilla;
+George Lucas:FIL-009:0:99:Star Wars;
+Zep:BAD-012:7:69:Titeuf;
+Gazzoti-Vehlman:BAD-009:11:11:Seuls;
+Yusuke Murata:MAN-020:2:22:One punch man;
+Buronson-Hara:MAN-086:0:14:Hokuto no Ken;
+Pierre Lemaitre:ROM-665:3:9:Au revoir la-haut;
+Jacques Prevert:ROM-762:6:7:Paroles;
+Rostand:ROM-038:2:4:Cyrano de Bergerac;
+Guillaume Apollinaire:POE-005:1:21:Alcools;
+George Horwell:ROM-862:2:8:1984;
+Patrick Roegiers:ROM-219:0:1:Le bonheur des belges;
+Laurent Gaude:ROM-177:3:3:La mort du roi Tsongor;
+Rutile-Zimra:BAD-777:8:8:Mytho;
+Papacito:ROM-069:1:2:Crepuscule des titans;
+Millar-Johnson-Plunkett:BAD-176:1:2:Superman Red son;
+Sun Tzu:ROM-419:1:2:L'art de la guerre;
