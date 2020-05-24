@@ -444,6 +444,7 @@ void listerRetards(Membres* membres, Livres* livres)
             if (compareDates(membres->membres[newi].emprunts.emprunts[j].dateRetour, d2) == -1) {
                 int index = localiserCodeAutomatique(*livres, membres->membres[newi].emprunts.emprunts[j].code);
                 afficherLivre(livres->livres[index]);
+                printf("En retard de %d ans, %d mois et %d jours.\n---------------\n", d2.annee - membres->membres[newi].emprunts.emprunts[j].dateRetour.annee, d2.mois - membres->membres[newi].emprunts.emprunts[j].dateRetour.mois, d2.jour - membres->membres[newi].emprunts.emprunts[j].dateRetour.jour);
             }
         }
         printf("\n\n");
