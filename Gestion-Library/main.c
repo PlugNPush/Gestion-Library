@@ -9,12 +9,14 @@
 #include "livres.h"
 #include "membres.h"
 
-void save(Livres* livres, Membres* membres) {
+void save(Livres* livres, Membres* membres)
+{
     db_saveMembres(*membres);
     db_saveLives(*livres);
 }
 
-void start(Livres* livres, Membres* membres) {
+void start(Livres* livres, Membres* membres)
+{
     char choix[50];
     printf("\n\n\nQue souhaitez-vous faire?\nafficher membres - afficher livres - ajouter membres - ajouter livres - trier membres - trier livres - sauvegarder - sortir - sortir sans sauvegarder\n> ");
     scanf("%50[^\n]", choix);
@@ -58,7 +60,8 @@ void start(Livres* livres, Membres* membres) {
     start(livres, membres);
 }
 
-void init(Livres* livres, Membres* membres) {
+void init(Livres* livres, Membres* membres)
+{
     
     db_loadMembres(membres);
     db_loadLivres(livres);
@@ -69,41 +72,12 @@ void init(Livres* livres, Membres* membres) {
 int main(int argc, const char * argv[])
 {
     
-    //Livres livres;
-    //db_loadLivres(&livres);
-    
     Livres livres;
     Membres membres;
     
     init(&livres, &membres);
     
     save(&livres, &membres);
-    
-    
-    db_loadMembres(&membres);
-    
-    afficherMembres(membres);
-    
-    printf("\n/////////\n\n");
-    
-    trierMembres(&membres);
-    
-    afficherMembres(membres);
-    
-    ajouterMembres(&membres);
-    
-    afficherMembres(membres);
-    
-    db_saveMembres(membres);
-    
-    //afficherLivres(livres);
-    
-    //ajouterLivres(&livres);
-    
-    //afficherLivres(livres);
-
-    //db_saveLives(livres);
 
     return 0;
 }
-
