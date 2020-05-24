@@ -7,6 +7,7 @@
 //
 
 #include "membres.h"
+#include "livres.h"
 
 void db_saveMembres(Membres membres) {
     //char* location = concat("/Gestion-Library/databases", "/db-membres.data");
@@ -180,7 +181,7 @@ void afficherMembres(Membres membres)
     }
 }
 
-void ajouterEmprunts(Emprunts* emprunts)
+void ajouterEmprunts(Emprunts* emprunts, Livres* livres)
 {
     int nb_emprunts;
     Emprunt* tab_emprunts;
@@ -196,14 +197,24 @@ void ajouterEmprunts(Emprunts* emprunts)
     
     for(i = emprunts->taille; i < (emprunts->taille + nb_emprunts); i++) {
         printf("Emprunt %d\n", i+1);
-        
+        char code[8];
         printf("\tCode   ?: ");
-        scanf("%8[^\n]", tab_emprunts[i].code);
-        fflush(stdin);
-        printf("\tDate retour (jj/mm/aaaa)?: ");
-        scanf("%d/%d/%d", &tab_emprunts[i].dateRetour.jour, &tab_emprunts[i].dateRetour.mois, &tab_emprunts[i].dateRetour.annee);
-        fflush(stdin);
-        printf("\n");
+        scanf("%8[^\n]", code);
+        
+        int index = localiserCodeAutomatique(*livres, code);
+        
+        if (index >= 0) {
+            int transaction = transactionLivre(livres, index, 1);
+            if (transaction > 0) {
+                strcpy(tab_emprunts[i].code, code);
+                fflush(stdin);
+                printf("\tDate retour (jj/mm/aaaa)?: ");
+                scanf("%d/%d/%d", &tab_emprunts[i].dateRetour.jour, &tab_emprunts[i].dateRetour.mois, &tab_emprunts[i].dateRetour.annee);
+                fflush(stdin);
+                printf("\n");
+            }
+            
+        }
     }
     
     emprunts->emprunts = tab_emprunts;
@@ -313,6 +324,18 @@ int localiserMembre(Membres membres)
             {
                 return i;
             }
+        }
+    }
+    return -1;
+}
+
+int localiserCodeAutomatique(Livres livres, char* code)
+{
+    for (int i = 0; i < livres.taille; i++)
+    {
+        if (strcmp(code, livres.livres[i].code) == 0)
+        {
+            return i;
         }
     }
     return -1;
