@@ -27,7 +27,7 @@ void start(Livres* livres, Membres* membres)
     } else if (strcmp(choix, "afficher livres") == 0) {
         afficherLivres(*livres);
     } else if (strcmp(choix, "ajouter membres") == 0) {
-        ajouterMembres(membres);
+        ajouterMembres(membres, livres);
     } else if (strcmp(choix, "ajouter livres") == 0) {
         ajouterLivres(livres);
     } else if (strcmp(choix, "demander un emprunt") == 0){
@@ -36,13 +36,13 @@ void start(Livres* livres, Membres* membres)
             if (membres->membres[index].emprunts.taille >= 3) {
                 printf("Vous avez trop d'emprunts !");
             } else {
-                ajouterEmprunts(&membres->membres[index].emprunts);
+                ajouterEmprunts(&membres->membres[index].emprunts, livres);
             }
         }
     } else if (strcmp(choix, "rendre un emprunt") == 0) {
         int index = localiserMembre(*membres);
         if (index >= 0) {
-            
+            supprimerEmpruntA(membres, livres, index);
         }
     } else if (strcmp(choix, "trier membres") == 0) {
         trierMembres(membres);

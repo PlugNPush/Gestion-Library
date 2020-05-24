@@ -297,12 +297,12 @@ int transactionLivre(Livres* livres, int index, int sens)
     // Sens positif = emprunter un livre.
     // Sens négatif = rendre un livre.
     if (sens > 0) {
-        if (livres->livres[index].exemplaires > 0) {
-            livres->livres[index].exemplaires = livres->livres[index].exemplaires - 1;
+        if (livres->livres[index].disponibles > 0) {
+            livres->livres[index].disponibles = livres->livres[index].disponibles - 1;
             return 1;
         }
     } else {
-        livres->livres[index].exemplaires = livres->livres[index].exemplaires + 1;
+        livres->livres[index].disponibles = livres->livres[index].disponibles + 1;
         return 1;
     }
     return 0;

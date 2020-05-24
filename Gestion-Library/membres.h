@@ -10,6 +10,8 @@
 #define membres_h
 
 #include "global.h"
+#include "livres.h"
+#include <time.h>
 
 typedef struct Date {
     int jour;
@@ -47,9 +49,12 @@ void trierMembres(Membres* membres);
 void afficherEmprunts(Emprunts emprunts);
 void afficherMembres(Membres membres);
 void ajouterEmprunts(Emprunts* emprunts, Livres* livres);
-void ajouterMembres(Membres* membres);
+void ajouterMembres(Membres* membres, Livres* livres);
 void supprimerMembre(int ligne, Membres* membres);
 int localiserMembre(Membres membres);
 int localiserCodeAutomatique(Livres livres, char* code);
+void supprimerEmpunt(int ligne, Emprunts* emprunts);
+int localiserEmprunt(Emprunts emprunts, char* code);
+void supprimerEmpruntA(Membres* membres, Livres* livres, int index);
 
 #endif /* membres_h */
