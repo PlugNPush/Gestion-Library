@@ -246,6 +246,7 @@ void ajouterMembres(Membres* membres)
         scanf("%100[^\n]", tab_membres[i].metier);
         fflush(stdin);
         tab_membres[i].emprunts.emprunts = (Emprunt*) malloc(sizeof(Emprunt));
+        tab_membres[i].emprunts.taille = 0;
         ajouterEmprunts(&tab_membres[i].emprunts);
 
         printf("\n---------------\n");
