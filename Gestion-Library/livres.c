@@ -134,7 +134,7 @@ void ajouterLivres(Livres* livres)
     printf("Nombre de livres a renseigner: ");
     scanf("%d", &nb_livre);
     fflush(stdin);
-    system("cls");
+    printf("\n");
 
     int i;
     // allocation mémoire pour tab_livre
@@ -171,7 +171,7 @@ void ajouterLivres(Livres* livres)
 
 
     // affichage tab
-    system("cls");
+    printf("\n");
     
     livres->livres = tab_livre;
     livres->taille = livres->taille + nb_livre;

@@ -219,7 +219,7 @@ void ajouterMembres(Membres* membres)
     printf("Nombre de membres a renseigner: ");
     scanf("%d", &nb_membres);
     fflush(stdin);
-    system("cls");
+    printf("\n");
 
     int i;
     // allocation mémoire pour tab_livre
@@ -254,7 +254,7 @@ void ajouterMembres(Membres* membres)
 
 
     // affichage tab
-    system("cls");
+    printf("\n");
     
     membres->membres = tab_membres;
     membres->taille = membres->taille + nb_membres;
