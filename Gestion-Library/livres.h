@@ -28,5 +28,8 @@ void db_saveLives(Livres livres);
 void db_loadLivres(Livres* livres);
 void afficherLivres(Livres livres);
 void ajouterLivres(Livres* livres);
+void trierLivresCode(Livres* livres);
+void trierLivresAuteur(Livres* livres);
+void trierLivres(Livres* livres);
 
 #endif /* livres_h */

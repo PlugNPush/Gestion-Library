@@ -34,6 +34,8 @@
 		ED6DA9D32479E01500228D9D /* membres.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = membres.c; sourceTree = "<group>"; };
 		ED6DA9D62479E18600228D9D /* global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
 		ED6DA9D72479E18600228D9D /* global.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = global.c; sourceTree = "<group>"; };
+		ED82FD10247AFFCD00155CBC /* db-membres.data */ = {isa = PBXFileReference; lastKnownFileType = text; path = "db-membres.data"; sourceTree = "<group>"; };
+		ED82FD11247AFFCE00155CBC /* db-livres.data */ = {isa = PBXFileReference; lastKnownFileType = text; path = "db-livres.data"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -66,6 +68,8 @@
 		ED1D40892461C7AE00F23485 /* Gestion-Library */ = {
 			isa = PBXGroup;
 			children = (
+				ED82FD11247AFFCE00155CBC /* db-livres.data */,
+				ED82FD10247AFFCD00155CBC /* db-membres.data */,
 				ED1D408A2461C7AE00F23485 /* main.c */,
 				ED6DA9CF2479DF4C00228D9D /* livres.h */,
 				ED6DA9D02479DF4C00228D9D /* livres.c */,
