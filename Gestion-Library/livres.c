@@ -9,9 +9,9 @@
 #include "livres.h"
 
 void db_saveLives(Livres livres) {
-    //char* location = concat("/Gestion-Library/databases", "/db-livres.data");
+    
     char* location = "db-livres.data";
-    printf("Now saving to location: %s\n", location);
+    printf("Enregistrement a l'emplacement: %s\n", location);
     FILE *livres_db = fopen(location, "w");
     
     if (livres_db == NULL) {
@@ -33,7 +33,7 @@ void db_saveLives(Livres livres) {
 
 void db_loadLivres(Livres* livres) {
     char* location = "db-livres.data";
-    printf("Now reading for location: %s\n", location);
+    printf("Enregistrement a l'emplacement: %s\n", location);
     FILE *livres_db = fopen(location, "r");
     
     livres->taille = 0;
@@ -51,7 +51,7 @@ void db_loadLivres(Livres* livres) {
     printf("controle d'integrite: %s\n", integrityCheck);
     
     if (strcmp(integrityCheck, location) != 0) {
-        printf("Integrity check failed, not loading data!\n");
+        printf("Echec de la verification de l’integrite, pas de chargement des donnees!\n");
         fclose(livres_db);
         return;
     }
@@ -61,7 +61,7 @@ void db_loadLivres(Livres* livres) {
     
     char verification[150];
     
-    //fscanf(livres_db, "DATA_SIZE: %d", &size);
+    
     fscanf(livres_db, " %19[^:]:%d\n", verification, &size);
     
     
@@ -162,9 +162,7 @@ void ajouterLivres(Livres* livres)
         scanf("%8[^\n]", tab_livre[i].code);
         fflush(stdin);
         
-        //strcpy(tab_livre[i].code, "XXX-YYY");
-        //tab_livre[i].disponibles = 5;
-        //tab_livre[i].exemplaires = 31;
+        
 
         printf("\n---------------\n");
     }

@@ -9,13 +9,13 @@
 #include "membres.h"
 
 void db_saveMembres(Membres membres) {
-    //char* location = concat("/Gestion-Library/databases", "/db-membres.data");
+    
     char* location = "db-membres.data";
-    printf("Now saving to location: %s", location);
+    printf("Enregistrement a l'emplacement: %s", location);
     FILE *membres_db = fopen(location, "w");
     
     if (membres_db == NULL) {
-        perror("Critical error, your data was not saved!");
+        perror("Erreur critique, vos donnees n’ont pas ete enregistrees!");
         fclose(membres_db);
         exit(EXIT_FAILURE);
     }
@@ -47,7 +47,7 @@ void db_saveMembres(Membres membres) {
 
 void db_loadMembres(Membres* membres) {
     char* location = "db-membres.data";
-    printf("Now reading for location: %s\n", location);
+    printf("Enregistrement a l'emplacement: %s\n", location);
     FILE *membres_db = fopen(location, "r");
     
     membres->taille = 0;
@@ -62,10 +62,10 @@ void db_loadMembres(Membres* membres) {
     char integrityCheck[150];
     fscanf(membres_db, "DATA_INTEGRITY_CHECK:%s", integrityCheck);
     
-    printf("Integrity check: %s\n", integrityCheck);
+    printf("controle d'integrite: %s\n", integrityCheck);
     
     if (strcmp(integrityCheck, location) != 0) {
-        printf("Integrity check failed, not loading data!\n");
+        printf("Echec de la verification de l’integrite, pas de chargement des donnees!\n");
         fclose(membres_db);
         return;
     }
@@ -78,13 +78,13 @@ void db_loadMembres(Membres* membres) {
     char verification[150];
     char verificationtotal[150];
     
-    //fscanf(livres_db, "DATA_SIZE: %d", &size);
+    
     fscanf(membres_db, " %19[^:]:%d\n", verification, &size);
     fscanf(membres_db, " %19[^:]:%d\n", verificationtotal, &totalsize);
     
     
     printf("Verification : %s\n", verification);
-    printf("Verificationtotal : %s\n", verificationtotal);
+    printf("Verification total : %s\n", verificationtotal);
     
     printf("READ DATA_SIZE: %d\n", size);
     printf("READ TOTAL_DATA_SIZE: %d\n", totalsize);
