@@ -31,5 +31,7 @@ void ajouterLivres(Livres* livres);
 void trierLivresCode(Livres* livres);
 void trierLivresAuteur(Livres* livres);
 void trierLivres(Livres* livres);
+void supprimerLivre(int ligne, Livres* livres);
+int localiserLivre(Livres livres);
 
 #endif /* livres_h */

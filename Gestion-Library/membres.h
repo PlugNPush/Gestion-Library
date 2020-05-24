@@ -48,5 +48,7 @@ void afficherEmprunts(Emprunts emprunts);
 void afficherMembres(Membres membres);
 void ajouterEmprunts(Emprunts* emprunts);
 void ajouterMembres(Membres* membres);
+void supprimerMembre(int ligne, Membres* membres);
+int localiserMembre(Membres membres);
 
 #endif /* membres_h */

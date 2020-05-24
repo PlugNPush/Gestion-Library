@@ -228,3 +228,46 @@ void trierLivres(Livres* livres)
     }
     
 }
+
+void supprimerLivre(int ligne, Livres* livres)
+{
+    int i;
+    if (ligne >= 0) {
+        for (i = ligne; i < livres->taille; i++)
+        {
+            livres->livres[i] = livres->livres[i+1];
+        }
+        livres->taille = livres->taille - 1;
+    }
+    if (ligne == -1) {
+        printf("Livre introuvable.\n");
+    }
+}
+
+int localiserLivre(Livres livres)
+{
+    Livre l;
+    printf("Livre à localiser ?\n");
+    printf("Titre :\n> ");
+    scanf("%100[^\n]", l.nom);
+    fflush(stdin);
+    printf("\n");
+
+    printf("Auteur :\n> ");
+    scanf("%100[^\n]", l.auteur);
+    fflush(stdin);
+    printf("\n");
+
+
+    for (int i = 0; i < livres.taille; i++)
+    {
+        if (strcmp(l.nom, livres.livres[i].nom) == 0)
+        {
+            if (strcmp(l.auteur, livres.livres[i].auteur) == 0)
+            {
+                return i;
+            }
+        }
+    }
+    return -1;
+}

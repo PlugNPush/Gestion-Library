@@ -18,7 +18,7 @@ void save(Livres* livres, Membres* membres)
 void start(Livres* livres, Membres* membres)
 {
     char choix[50];
-    printf("\n\n\nQue souhaitez-vous faire?\nafficher membres - afficher livres - ajouter membres - ajouter livres - trier membres - trier livres - sauvegarder - sortir - sortir sans sauvegarder\n> ");
+    printf("\n\n\nQue souhaitez-vous faire?\nafficher membres - afficher livres - ajouter membres - ajouter livres - trier membres - trier livres - supprimer membre - supprimer livre - sauvegarder - sortir - sortir sans sauvegarder\n> ");
     scanf("%50[^\n]", choix);
     fflush(stdin);
     printf("Commande: %s\n", choix);
@@ -47,6 +47,12 @@ void start(Livres* livres, Membres* membres)
             printf("Argument non reconnu.\n");
         }
         
+    } else if (strcmp(choix, "supprimer membre") == 0) {
+        int index = localiserMembre(*membres);
+        supprimerMembre(index, membres);
+    } else if (strcmp(choix, "supprimer livre") == 0) {
+        int index = localiserLivre(*livres);
+        supprimerLivre(index, livres);
     } else if (strcmp(choix, "sauvegarder") == 0) {
         save(livres, membres);
     } else if (strcmp(choix, "sortir") == 0) {
