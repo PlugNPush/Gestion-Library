@@ -271,3 +271,39 @@ int localiserLivre(Livres livres)
     }
     return -1;
 }
+
+int localiserCode(Livres livres)
+{
+    Livre l;
+    printf("Livre à localiser ?\n");
+    printf("Code:\n> ");
+    scanf("%8[^\n]", l.code);
+    fflush(stdin);
+    printf("\n");
+
+
+    for (int i = 0; i < livres.taille; i++)
+    {
+        if (strcmp(l.code, livres.livres[i].code) == 0)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+int transactionLivre(Livres* livres, int index, int sens)
+{
+    // Sens positif = emprunter un livre.
+    // Sens négatif = rendre un livre.
+    if (sens > 0) {
+        if (livres->livres[index].exemplaires > 0) {
+            livres->livres[index].exemplaires = livres->livres[index].exemplaires - 1;
+            return 1;
+        }
+    } else {
+        livres->livres[index].exemplaires = livres->livres[index].exemplaires + 1;
+        return 1;
+    }
+    return 0;
+}

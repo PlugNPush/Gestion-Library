@@ -33,5 +33,7 @@ void trierLivresAuteur(Livres* livres);
 void trierLivres(Livres* livres);
 void supprimerLivre(int ligne, Livres* livres);
 int localiserLivre(Livres livres);
+int localiserCode(Livres livres);
+int transactionLivre(Livres* livres, int index, int sens);
 
 #endif /* livres_h */

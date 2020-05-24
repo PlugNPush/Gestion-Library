@@ -46,9 +46,10 @@ void db_loadMembres(Membres* membres);
 void trierMembres(Membres* membres);
 void afficherEmprunts(Emprunts emprunts);
 void afficherMembres(Membres membres);
-void ajouterEmprunts(Emprunts* emprunts);
+void ajouterEmprunts(Emprunts* emprunts, Livres* livres);
 void ajouterMembres(Membres* membres);
 void supprimerMembre(int ligne, Membres* membres);
 int localiserMembre(Membres membres);
+int localiserCodeAutomatique(Livres livres, char* code);
 
 #endif /* membres_h */
