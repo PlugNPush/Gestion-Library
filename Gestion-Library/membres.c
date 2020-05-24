@@ -47,7 +47,7 @@ void db_saveMembres(Membres membres) {
 
 void db_loadMembres(Membres* membres) {
     char* location = "db-membres.data";
-    printf("Enregistrement a l'emplacement: %s\n", location);
+    printf("Ouverture depuis l'emplacement: %s\n", location);
     FILE *membres_db = fopen(location, "r");
     
     membres->taille = 0;
@@ -62,7 +62,7 @@ void db_loadMembres(Membres* membres) {
     char integrityCheck[150];
     fscanf(membres_db, "DATA_INTEGRITY_CHECK:%s", integrityCheck);
     
-    printf("controle d'integrite: %s\n", integrityCheck);
+    printf("Controle d'integrite: %s\n", integrityCheck);
     
     if (strcmp(integrityCheck, location) != 0) {
         printf("Echec de la verification de l’integrite, pas de chargement des donnees!\n");
@@ -109,8 +109,8 @@ void db_loadMembres(Membres* membres) {
     fclose(integrity_module);
     
     if (integrity != totalsize) {
-        printf("\nModule d’integrite calcule %d, mais %d a ete elimine.\n", integrity, totalsize);
-        printf("Echec du test d’integrite : le fichier a ete modifie illegalement ! Ne pas charger les donnees.\n\n");
+        printf("\nLe module d’integrite a calcule %d, mais %d etait attendu.\n", integrity, totalsize);
+        printf("Echec du test d’integrite : le fichier a ete modifie illegalement ! Les donnees ne seront pas chargees.\n\n");
         fclose(membres_db);
         return;
     }
@@ -304,7 +304,7 @@ void supprimerMembre(int ligne, Membres* membres)
 int localiserMembre(Membres membres)
 {
     Membre m;
-    printf("Membre à localiser ?\n");
+    printf("Membre a localiser ?\n");
     printf("Nom :\n> ");
     scanf("%100[^\n]", m.nom);
     fflush(stdin);
