@@ -111,7 +111,7 @@ void afficherLivres(Livres livres)
     int r;
     for(r = 0; r < livres.taille; r++) {
         printf("Livre %d\n", r+1);
-        printf("\tNom   : ");
+        printf("\tTitre   : ");
         printf("%s", livres.livres[r].nom);
         printf("\tAuteur: ");
         printf("%s", livres.livres[r].auteur);
@@ -304,4 +304,38 @@ int transactionLivre(Livres* livres, int index, int sens)
         return 1;
     }
     return 0;
+}
+
+void afficherLivre(Livre livre)
+{
+    printf("\tTitre   : ");
+    printf("%s", livre.nom);
+    printf("\tAuteur: ");
+    printf("%s", livre.auteur);
+    printf("\tCode: ");
+    printf("%s", livre.code);
+    printf("\tExemplaires: ");
+    printf("%d", livre.exemplaires);
+    printf("\tDispobibles: ");
+    printf("%d", livre.disponibles);
+
+    printf("\n---------------\n");
+}
+
+void rechercherLivre(Livres livres)
+{
+    char recherche[100];
+    printf("Effectuez votre recherche.\n");
+    printf("Recherche groupee (code, titre, auteur...):\n> ");
+    scanf("%100[^\n]", recherche);
+    fflush(stdin);
+    
+    for (int i = 0; i < livres.taille; i++)
+    {
+        if ((strcmp(recherche, livres.livres[i].code) == 0) || (strcmp(recherche, livres.livres[i].nom) == 0) || (strcmp(recherche, livres.livres[i].auteur) == 0))
+        {
+            afficherLivre(livres.livres[i]);
+        }
+    }
+    
 }

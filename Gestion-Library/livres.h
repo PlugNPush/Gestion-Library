@@ -35,5 +35,7 @@ void supprimerLivre(int ligne, Livres* livres);
 int localiserLivre(Livres livres);
 int localiserCode(Livres livres);
 int transactionLivre(Livres* livres, int index, int sens);
+void afficherLivre(Livre livre);
+void rechercherLivre(Livres livres);
 
 #endif /* livres_h */
