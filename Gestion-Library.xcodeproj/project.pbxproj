@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		ED1D408B2461C7AE00F23485 /* main.c in Sources */ = {isa = PBXBuildFile; fileRef = ED1D408A2461C7AE00F23485 /* main.c */; };
+		ED6DA9D12479DF4C00228D9D /* livres.c in Sources */ = {isa = PBXBuildFile; fileRef = ED6DA9D02479DF4C00228D9D /* livres.c */; };
+		ED6DA9D42479E01500228D9D /* membres.c in Sources */ = {isa = PBXBuildFile; fileRef = ED6DA9D32479E01500228D9D /* membres.c */; };
+		ED6DA9D82479E18600228D9D /* global.c in Sources */ = {isa = PBXBuildFile; fileRef = ED6DA9D72479E18600228D9D /* global.c */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -25,6 +28,12 @@
 /* Begin PBXFileReference section */
 		ED1D40872461C7AE00F23485 /* Gestion-Library */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "Gestion-Library"; sourceTree = BUILT_PRODUCTS_DIR; };
 		ED1D408A2461C7AE00F23485 /* main.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = main.c; sourceTree = "<group>"; };
+		ED6DA9CF2479DF4C00228D9D /* livres.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = livres.h; sourceTree = "<group>"; };
+		ED6DA9D02479DF4C00228D9D /* livres.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = livres.c; sourceTree = "<group>"; };
+		ED6DA9D22479E01500228D9D /* membres.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = membres.h; sourceTree = "<group>"; };
+		ED6DA9D32479E01500228D9D /* membres.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = membres.c; sourceTree = "<group>"; };
+		ED6DA9D62479E18600228D9D /* global.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = global.h; sourceTree = "<group>"; };
+		ED6DA9D72479E18600228D9D /* global.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; path = global.c; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,6 +67,12 @@
 			isa = PBXGroup;
 			children = (
 				ED1D408A2461C7AE00F23485 /* main.c */,
+				ED6DA9CF2479DF4C00228D9D /* livres.h */,
+				ED6DA9D02479DF4C00228D9D /* livres.c */,
+				ED6DA9D22479E01500228D9D /* membres.h */,
+				ED6DA9D32479E01500228D9D /* membres.c */,
+				ED6DA9D62479E18600228D9D /* global.h */,
+				ED6DA9D72479E18600228D9D /* global.c */,
 			);
 			path = "Gestion-Library";
 			sourceTree = "<group>";
@@ -119,6 +134,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				ED6DA9D42479E01500228D9D /* membres.c in Sources */,
+				ED6DA9D12479DF4C00228D9D /* livres.c in Sources */,
+				ED6DA9D82479E18600228D9D /* global.c in Sources */,
 				ED1D408B2461C7AE00F23485 /* main.c in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -238,7 +256,7 @@
 		ED1D408F2461C7AE00F23485 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Gestion-Library/Gestion-Library.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZL9396WK65;
@@ -251,7 +269,7 @@
 		ED1D40902461C7AE00F23485 /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = "Gestion-Library/Gestion-Library.entitlements";
+				CODE_SIGN_ENTITLEMENTS = "";
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = ZL9396WK65;
