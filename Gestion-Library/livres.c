@@ -332,7 +332,7 @@ void rechercherLivre(Livres livres)
     
     for (int i = 0; i < livres.taille; i++)
     {
-        if ((strcmp(recherche, livres.livres[i].code) == 0) || (strcmp(recherche, livres.livres[i].nom) == 0) || (strcmp(recherche, livres.livres[i].auteur) == 0))
+        if ((strcmp(recherche, livres.livres[i].code) == 0) || (strcmp(recherche, livres.livres[i].nom) == 0) || (strcmp(recherche, livres.livres[i].auteur) == 0) || (strncmp(recherche, livres.livres[i].code, 3) == 0))
         {
             afficherLivre(livres.livres[i]);
         }
