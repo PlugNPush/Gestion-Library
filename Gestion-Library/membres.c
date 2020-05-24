@@ -7,7 +7,6 @@
 //
 
 #include "membres.h"
-#include "livres.h"
 
 void db_saveMembres(Membres membres) {
     //char* location = concat("/Gestion-Library/databases", "/db-membres.data");
@@ -222,7 +221,7 @@ void ajouterEmprunts(Emprunts* emprunts, Livres* livres)
     
 }
 
-void ajouterMembres(Membres* membres)
+void ajouterMembres(Membres* membres, Livres* livres)
 {
     int nb_membres;
     Membre* tab_membres;
@@ -258,7 +257,7 @@ void ajouterMembres(Membres* membres)
         fflush(stdin);
         tab_membres[i].emprunts.emprunts = (Emprunt*) malloc(sizeof(Emprunt));
         tab_membres[i].emprunts.taille = 0;
-        ajouterEmprunts(&tab_membres[i].emprunts);
+        ajouterEmprunts(&tab_membres[i].emprunts, livres);
 
         printf("\n---------------\n");
     }
@@ -339,4 +338,56 @@ int localiserCodeAutomatique(Livres livres, char* code)
         }
     }
     return -1;
+}
+
+void supprimerEmpunt(int ligne, Emprunts* emprunts)
+{
+    int i;
+    if (ligne >= 0) {
+        for (i = ligne; i < emprunts->taille; i++)
+        {
+            emprunts->emprunts[i] = emprunts->emprunts[i+1];
+        }
+        emprunts->taille = emprunts->taille - 1;
+    }
+    if (ligne == -1) {
+        printf("Membre introuvable.\n");
+    }
+}
+
+int localiserEmprunt(Emprunts emprunts, char* code)
+{
+    for (int i = 0; i < emprunts.taille; i++)
+    {
+        if (strcmp(code, emprunts.emprunts[i].code) == 0)
+        {
+            return i;
+        }
+    }
+    return -1;
+}
+
+void supprimerEmpruntA(Membres* membres, Livres* livres, int index)
+{
+    time_t my_time;
+    struct tm * timeinfo;
+    time (&my_time);
+    timeinfo = localtime (&my_time);
+    Date d2;
+    d2.jour = timeinfo->tm_mday;
+    d2.mois = timeinfo->tm_mon+1;
+    d2.annee = timeinfo->tm_year+1900;
+    char code[8];
+    printf("Saisir le code:\n> ");
+    scanf("%8[^\n]", code);
+    fflush(stdin);
+    int index2 = localiserEmprunt(membres->membres[index].emprunts, code);
+    int index3 = localiserCodeAutomatique(*livres, code);
+    if (index2 >= 0 && index3 >= 0) {
+        if (compareDates(membres->membres[index].emprunts.emprunts[index2].dateRetour, d2) == -1) {
+            printf("Vous avez rendu votre emprunt en retard.");
+        }
+        supprimerEmpunt(index2, &membres->membres[index].emprunts);
+        transactionLivre(livres, index3, -1);
+    }
 }
