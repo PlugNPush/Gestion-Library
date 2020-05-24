@@ -15,7 +15,7 @@ void db_saveLives(Livres livres) {
     FILE *livres_db = fopen(location, "w");
     
     if (livres_db == NULL) {
-        perror("Erreur critique, vos données n’ont pas ete enregistrees");
+        perror("Erreur critique, vos donnees n’ont pas ete enregistrees");
         fclose(livres_db);
         exit(EXIT_FAILURE);
     }
@@ -33,7 +33,7 @@ void db_saveLives(Livres livres) {
 
 void db_loadLivres(Livres* livres) {
     char* location = "db-livres.data";
-    printf("Enregistrement a l'emplacement: %s\n", location);
+    printf("Chargement depuis l'emplacement: %s\n", location);
     FILE *livres_db = fopen(location, "r");
     
     livres->taille = 0;
@@ -48,7 +48,7 @@ void db_loadLivres(Livres* livres) {
     char integrityCheck[150];
     fscanf(livres_db, "DATA_INTEGRITY_CHECK:%s", integrityCheck);
     
-    printf("controle d'integrite: %s\n", integrityCheck);
+    printf("Controle d'integrite: %s\n", integrityCheck);
     
     if (strcmp(integrityCheck, location) != 0) {
         printf("Echec de la verification de l’integrite, pas de chargement des donnees!\n");
@@ -88,8 +88,8 @@ void db_loadLivres(Livres* livres) {
     fclose(integrity_module);
     
     if (integrity != size) {
-        printf("\nModule d’integrite calcule %d, mais %d a ete elimine.\n", integrity, size);
-        printf("Echec du test d’integrite : le fichier a ete modifie illegalement ! Ne pas charger les donnees.\n\n");
+        printf("\nLe module d’integrite a calcule %d, mais %d etait attendu.\n", integrity, size);
+        printf("Echec du test d’integrite : le fichier a ete modifie illegalement ! Les donnees ne seront pas chargees.\n\n");
         fclose(livres_db);
         return;
     }
@@ -145,7 +145,7 @@ void ajouterLivres(Livres* livres)
     for(i = livres->taille; i < (livres->taille + nb_livre); i++) {
         printf("Livre %d\n", i+1);
         
-        printf("\tNom   ?: ");
+        printf("\tTitre   ?: ");
         scanf("%100[^\n]", tab_livre[i].nom);
         fflush(stdin);
         printf("\tAuteur?: ");
@@ -245,7 +245,7 @@ void supprimerLivre(int ligne, Livres* livres)
 int localiserLivre(Livres livres)
 {
     Livre l;
-    printf("Livre à localiser ?\n");
+    printf("Livre a localiser ?\n");
     printf("Titre :\n> ");
     scanf("%100[^\n]", l.nom);
     fflush(stdin);
@@ -273,7 +273,7 @@ int localiserLivre(Livres livres)
 int localiserCode(Livres livres)
 {
     Livre l;
-    printf("Livre à localiser ?\n");
+    printf("Livre a localiser ?\n");
     printf("Code:\n> ");
     scanf("%8[^\n]", l.code);
     fflush(stdin);
