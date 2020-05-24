@@ -13,33 +13,33 @@
 int main(int argc, const char * argv[])
 {
     
-    //Livres livres;
-    //db_loadLivres(&livres);
+    Livres livres;
+    db_loadLivres(&livres);
     
-    Membres membres;
-    db_loadMembres(&membres);
+    //Membres membres;
+    //db_loadMembres(&membres);
     
-    afficherMembres(membres);
+    //afficherMembres(membres);
     
     printf("\n/////////\n\n");
     
-    trierMembres(&membres);
+    //trierMembres(&membres);
     
-    afficherMembres(membres);
+    //afficherMembres(membres);
     
-    ajouterMembres(&membres);
+    //ajouterMembres(&membres);
     
-    afficherMembres(membres);
+    //afficherMembres(membres);
     
-    db_saveMembres(membres);
+    //db_saveMembres(membres);
     
-    //afficherLivres(livres);
+    afficherLivres(livres);
     
-    //ajouterLivres(&livres);
+    ajouterLivres(&livres);
     
-    //afficherLivres(livres);
+    afficherLivres(livres);
 
-    //db_saveLives(livres);
+    db_saveLives(livres);
 
     return 0;
 }
