@@ -421,17 +421,31 @@ void listerRetards(Membres* membres, Livres* livres)
     d2.mois = timeinfo->tm_mon+1;
     d2.annee = timeinfo->tm_year+1900;
     
+    int* listemdelits = (int*) malloc(membres->taille * sizeof(int));
+    int taillemdelits = 0;
+    
     int i, j;
+    
     for (i=0; i < membres->taille; i++) {
-        for (j=0; j < membres->membres[i].emprunts.taille; j++) {
-            if (compareDates(membres->membres[i].emprunts.emprunts[j].dateRetour, d2) == -1) {
-                printf("---------------\nLe membre :\n---------------\n");
-                afficherMembre(membres->membres[i]);
-                printf("n'a pas rendu dans les temps le livre : \n");
-                int index = localiserCodeAutomatique(*livres, membres->membres[i].emprunts.emprunts[j].code);
+    for (j=0; j < membres->membres[i].emprunts.taille; j++) {
+        if (compareDates(membres->membres[i].emprunts.emprunts[j].dateRetour, d2) == -1) {
+            listemdelits[taillemdelits] = i;
+            taillemdelits++;
+        }
+    }
+    }
+        
+    for (i=0; i < taillemdelits; i++) {
+        int newi = listemdelits[i];
+        printf("---------------\nLe membre :\n---------------\n");
+        afficherMembre(membres->membres[newi]);
+        printf("n'a pas rendu dans les temps les livres suivants : \n---------------\n");
+        for (j=0; j < membres->membres[newi].emprunts.taille; j++) {
+            if (compareDates(membres->membres[newi].emprunts.emprunts[j].dateRetour, d2) == -1) {
+                int index = localiserCodeAutomatique(*livres, membres->membres[newi].emprunts.emprunts[j].code);
                 afficherLivre(livres->livres[index]);
-                printf("\n\n");
             }
         }
+        printf("\n\n");
     }
 }
