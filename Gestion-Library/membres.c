@@ -109,7 +109,7 @@ void db_loadMembres(Membres* membres) {
     fclose(integrity_module);
     
     if (integrity != totalsize) {
-        printf("\nIntegrity Module calculated %d, but %d was exptected.\n", integrity, size);
+        printf("\nIntegrity Module calculated %d, but %d was exptected.\n", integrity, totalsize);
         printf("Integrity test failed: the file was illegally modified! Not loading data.\n\n");
         fclose(membres_db);
         return;
@@ -136,8 +136,8 @@ Membres getSortedList(Membres membres)
     int i, j;
     Membre tmp;
     
-    for(i=0;i<=membres.taille;i++) {
-        for(j=i+1;j<=membres.taille;j++){
+    for(i=0;i<membres.taille;i++) {
+        for(j=i+1;j<membres.taille;j++){
             if(strcmp(membres.membres[i].nom,membres.membres[j].nom)>0){
                 tmp = membres.membres[i];
                 membres.membres[i] = membres.membres[j];

@@ -21,6 +21,10 @@ int main(int argc, const char * argv[])
     
     afficherMembres(membres);
     
+    printf("\n/////////\n\n");
+    
+    afficherMembres(getSortedList(membres));
+    
     ajouterMembres(&membres);
     
     afficherMembres(membres);
