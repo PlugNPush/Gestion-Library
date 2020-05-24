@@ -23,7 +23,9 @@ int main(int argc, const char * argv[])
     
     printf("\n/////////\n\n");
     
-    afficherMembres(getSortedList(membres));
+    trierMembres(&membres);
+    
+    afficherMembres(membres);
     
     ajouterMembres(&membres);
     

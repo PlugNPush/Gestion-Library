@@ -43,7 +43,7 @@ typedef struct Membres {
 
 void db_saveMembres(Membres membres);
 void db_loadMembres(Membres* membres);
-Membres getSortedList(Membres membres);
+void trierMembres(Membres* membres);
 void afficherEmprunts(Emprunts emprunts);
 void afficherMembres(Membres membres);
 void ajouterEmprunts(Emprunts* emprunts);

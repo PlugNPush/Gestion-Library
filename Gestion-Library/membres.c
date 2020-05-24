@@ -131,22 +131,20 @@ void db_loadMembres(Membres* membres) {
     fclose(membres_db);
 }
 
-Membres getSortedList(Membres membres)
+void trierMembres(Membres* membres)
 {
     int i, j;
     Membre tmp;
     
-    for(i=0;i<membres.taille;i++) {
-        for(j=i+1;j<membres.taille;j++){
-            if(strcmp(membres.membres[i].nom,membres.membres[j].nom)>0){
-                tmp = membres.membres[i];
-                membres.membres[i] = membres.membres[j];
-                membres.membres[j] = tmp;
+    for(i=0;i<membres->taille;i++) {
+        for(j=i+1;j<membres->taille;j++){
+            if(strcmp(membres->membres[i].nom,membres->membres[j].nom)>0){
+                tmp = membres->membres[i];
+                membres->membres[i] = membres->membres[j];
+                membres->membres[j] = tmp;
            }
         }
     }
-    
-    return membres;
     
 }
 
