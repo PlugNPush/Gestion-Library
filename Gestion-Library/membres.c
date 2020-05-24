@@ -274,3 +274,46 @@ int compareDates(Date d1, Date d2){
 
     return 0;
 }
+
+void supprimerMembre(int ligne, Membres* membres)
+{
+    int i;
+    if (ligne >= 0) {
+        for (i = ligne; i < membres->taille; i++)
+        {
+            membres->membres[i] = membres->membres[i+1];
+        }
+        membres->taille = membres->taille - 1;
+    }
+    if (ligne == -1) {
+        printf("Membre introuvable.\n");
+    }
+}
+
+int localiserMembre(Membres membres)
+{
+    Membre m;
+    printf("Membre à localiser ?\n");
+    printf("Nom :\n> ");
+    scanf("%100[^\n]", m.nom);
+    fflush(stdin);
+    printf("\n");
+
+    printf("Prenom :\n> ");
+    scanf("%100[^\n]", m.prenom);
+    fflush(stdin);
+    printf("\n");
+
+
+    for (int i = 0; i < membres.taille; i++)
+    {
+        if (strcmp(m.nom, membres.membres[i].nom) == 0)
+        {
+            if (strcmp(m.prenom, membres.membres[i].prenom) == 0)
+            {
+                return i;
+            }
+        }
+    }
+    return -1;
+}
