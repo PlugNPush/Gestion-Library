@@ -9,37 +9,101 @@
 #include "livres.h"
 #include "membres.h"
 
+void save(Livres* livres, Membres* membres) {
+    db_saveMembres(*membres);
+    db_saveLives(*livres);
+}
+
+void start(Livres* livres, Membres* membres) {
+    char choix[50];
+    printf("\n\n\nQue souhaitez-vous faire?\nafficher membres - afficher livres - ajouter membres - ajouter livres - trier membres - trier livres - sauvegarder - sortir - sortir sans sauvegarder\n> ");
+    scanf("%50[^\n]", choix);
+    fflush(stdin);
+    printf("Commande: %s\n", choix);
+    if (strcmp(choix, "afficher membres") == 0) {
+        afficherMembres(*membres);
+    } else if (strcmp(choix, "afficher livres") == 0) {
+        afficherLivres(*livres);
+    } else if (strcmp(choix, "ajouter membres") == 0) {
+        ajouterMembres(membres);
+    } else if (strcmp(choix, "ajouter livres") == 0) {
+        ajouterLivres(livres);
+    } else if (strcmp(choix, "trier membres") == 0) {
+        trierMembres(membres);
+    } else if (strcmp(choix, "trier livres") == 0) {
+        char choixtri[50];
+        printf("Comment voulez-vous les trier?\ntitre - auteur - code\n> ");
+        scanf("%50[^\n]", choixtri);
+        fflush(stdin);
+        if (strcmp(choixtri, "titre") == 0) {
+            trierLivres(livres);
+        } else if (strcmp(choixtri, "auteur") == 0) {
+            trierLivresAuteur(livres);
+        } else if (strcmp(choixtri, "code") == 0) {
+            trierLivresCode(livres);
+        } else {
+            printf("Argument non reconnu.\n");
+        }
+        
+    } else if (strcmp(choix, "sauvegarder") == 0) {
+        save(livres, membres);
+    } else if (strcmp(choix, "sortir") == 0) {
+        return;
+    } else if (strcmp(choix, "sortir sans sauvegarder") == 0) {
+        exit(EXIT_SUCCESS);
+    }
+    else {
+        printf("Commande non reconnue.\n");
+    }
+    start(livres, membres);
+}
+
+void init(Livres* livres, Membres* membres) {
+    
+    db_loadMembres(membres);
+    db_loadLivres(livres);
+    
+    start(livres, membres);
+}
 
 int main(int argc, const char * argv[])
 {
     
+    //Livres livres;
+    //db_loadLivres(&livres);
+    
     Livres livres;
-    db_loadLivres(&livres);
+    Membres membres;
     
-    //Membres membres;
-    //db_loadMembres(&membres);
+    init(&livres, &membres);
     
-    //afficherMembres(membres);
+    save(&livres, &membres);
+    
+    
+    db_loadMembres(&membres);
+    
+    afficherMembres(membres);
     
     printf("\n/////////\n\n");
     
-    //trierMembres(&membres);
+    trierMembres(&membres);
     
-    //afficherMembres(membres);
+    afficherMembres(membres);
     
-    //ajouterMembres(&membres);
+    ajouterMembres(&membres);
     
-    //afficherMembres(membres);
+    afficherMembres(membres);
     
-    //db_saveMembres(membres);
+    db_saveMembres(membres);
     
-    afficherLivres(livres);
+    //afficherLivres(livres);
     
-    ajouterLivres(&livres);
+    //ajouterLivres(&livres);
     
-    afficherLivres(livres);
+    //afficherLivres(livres);
 
-    db_saveLives(livres);
+    //db_saveLives(livres);
 
     return 0;
 }
+

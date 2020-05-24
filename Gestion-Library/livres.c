@@ -177,3 +177,54 @@ void ajouterLivres(Livres* livres)
     livres->taille = livres->taille + nb_livre;
     
 }
+
+void trierLivresCode(Livres* livres)
+{
+    int i, j;
+    Livre tmp;
+    
+    for(i=0;i<livres->taille;i++) {
+        for(j=i+1;j<livres->taille;j++){
+            if(strcmp(livres->livres[i].code,livres->livres[j].code)>0){
+                tmp = livres->livres[i];
+                livres->livres[i] = livres->livres[j];
+                livres->livres[j] = tmp;
+           }
+        }
+    }
+    
+}
+
+void trierLivresAuteur(Livres* livres)
+{
+    int i, j;
+    Livre tmp;
+    
+    for(i=0;i<livres->taille;i++) {
+        for(j=i+1;j<livres->taille;j++){
+            if(strcmp(livres->livres[i].auteur,livres->livres[j].auteur)>0){
+                tmp = livres->livres[i];
+                livres->livres[i] = livres->livres[j];
+                livres->livres[j] = tmp;
+           }
+        }
+    }
+    
+}
+
+void trierLivres(Livres* livres)
+{
+    int i, j;
+    Livre tmp;
+    
+    for(i=0;i<livres->taille;i++) {
+        for(j=i+1;j<livres->taille;j++){
+            if(strcmp(livres->livres[i].nom,livres->livres[j].nom)>0){
+                tmp = livres->livres[i];
+                livres->livres[i] = livres->livres[j];
+                livres->livres[j] = tmp;
+           }
+        }
+    }
+    
+}
