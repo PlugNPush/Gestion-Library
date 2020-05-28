@@ -11,7 +11,7 @@
 void db_saveMembres(Membres membres) {
     
     char* location = "db-membres.data";
-    printf("Enregistrement a l'emplacement: %s", location);
+    printf("Enregistrement a l'emplacement: %s\n", location);
     FILE *membres_db = fopen(location, "w");
     
     if (membres_db == NULL) {
@@ -403,7 +403,7 @@ void supprimerEmpruntA(Membres* membres, Livres* livres, int index)
     int index3 = localiserCodeAutomatique(*livres, code);
     if (index2 >= 0 && index3 >= 0) {
         if (compareDates(membres->membres[index].emprunts.emprunts[index2].dateRetour, d2) == -1) {
-            printf("Vous avez rendu votre emprunt en retard.");
+            printf("Vous avez rendu votre emprunt en retard.\n");
         }
         supprimerEmpunt(index2, &membres->membres[index].emprunts);
         transactionLivre(livres, index3, -1);
